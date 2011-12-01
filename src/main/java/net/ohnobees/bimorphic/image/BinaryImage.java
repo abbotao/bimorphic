@@ -39,6 +39,8 @@ public class BinaryImage {
 	}
 	
 	public static BinaryImage LoadImage(BufferedImage bi) {
+		//TODO: write this to pack into something we can perform bitwise ops
+		//on for improved performance.
 		BinaryImage img = new BinaryImage(bi.getWidth(), bi.getHeight());
 		for (int y = 0; y < img.height; y++)
 			for (int x = 0; x < img.width; x++)
