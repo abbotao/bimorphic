@@ -7,20 +7,20 @@ import org.junit.Test;
 public class MedianBinarizationFunctorTest {
 
 	@Test(expected=BinarizationException.class)
-	public void testInitNull() {
+	public void testInitNull() throws BinarizationException {
 		MedianBinarizationFunctor mbf = new MedianBinarizationFunctor();
 		mbf.init(null);
 	}
 
 	@Test(expected=BinarizationException.class)
-	public void testInitEmpty() {
+	public void testInitEmpty() throws BinarizationException {
 		MedianBinarizationFunctor mbf = new MedianBinarizationFunctor();
 		int[] data = new int[0];
 		mbf.init(data);
 	}
 	
 	@Test(expected=BinarizationException.class)
-	public void testInitTwice() {
+	public void testInitTwice() throws BinarizationException {
 		MedianBinarizationFunctor mbf = new MedianBinarizationFunctor();
 		int[] data = {0, 1, 2, 3, 4, 5, 6};
 		mbf.init(data);
@@ -29,10 +29,10 @@ public class MedianBinarizationFunctorTest {
 	
 	
 	@Test
-	public void testInit() {
+	public void testInit() throws BinarizationException {
 		MedianBinarizationFunctor mbf = new MedianBinarizationFunctor();
 		int[] first = {1, 2, 3, 4, 5, 6};
-		int median = 3;
+		int median = 4;
 		mbf.init(first);
 
 		assertEquals(median, mbf.median);
@@ -46,7 +46,7 @@ public class MedianBinarizationFunctorTest {
 		
 		mbf = new MedianBinarizationFunctor();
 		int[] third = {5, 2, 3, 6, 1, 4};
-		median = 3;
+		median = 4;
 		mbf.init(third);
 
 		assertEquals(median, mbf.median);
@@ -60,10 +60,10 @@ public class MedianBinarizationFunctorTest {
 	}
 	
 	@Test
-	public void testBinarize() {
+	public void testBinarize() throws BinarizationException {
 		MedianBinarizationFunctor mbf = new MedianBinarizationFunctor();
 		int[] first = {1, 2, 3, 4, 5, 6};
-		int median = 3;
+		int median = 4;
 		mbf.init(first);
 		for (int i = 0; i < 8; i++)
 			assertEquals("Failed on " + Integer.toString(i), i < median, mbf.binarize(i));

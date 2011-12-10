@@ -1,11 +1,8 @@
 package net.ohnobees.bimorphic.image;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
-
+import net.ohnobees.bimorphic.functors.BinarizationException;
 import net.ohnobees.bimorphic.functors.BinarizationFunctor;
 import net.ohnobees.bimorphic.functors.MedianBinarizationFunctor;
 
@@ -22,6 +19,10 @@ public class BinaryImage {
 	public int getHeight() {
 		return height;
 	}
+	
+	public final int[] getData() { return data; }
+	
+	public boolean getPixel(int x, int y) { return (data[(y*width) + x] != 0); }
 
 	public BinarizationFunctor getBinarizationMethod() {
 		return binMethod;
@@ -54,27 +55,7 @@ public class BinaryImage {
 		binMethod = f;
 	}
 	
-	public static BinaryImage LoadImage(File f) {
-		BufferedImage bi = null;
-		try {
-			bi = ImageIO.read(f);
-		} catch (IOException e) {
-			
-		}
-		return LoadImage(bi, null);
-	}
-	
-	public static BinaryImage LoadImage(File f, BinarizationFunctor functor) {
-		BufferedImage bi = null;
-		try {
-			bi = ImageIO.read(f);
-		} catch (IOException e) {
-			
-		}
-		return LoadImage(bi, functor);
-	}
-	
-	public static BinaryImage LoadImage(BufferedImage bi, BinarizationFunctor f) {
+	public static BinaryImage loadImage(BufferedImage bi, BinarizationFunctor f) throws BinarizationException {
 		//TODO: write this to pack into something we can perform bitwise ops
 		//on for improved performance.
 		BinaryImage img = new BinaryImage(bi.getWidth(), bi.getHeight(), f);
