@@ -3,17 +3,21 @@ package net.ohnobees.bimorphic.image;
 import static org.junit.Assert.*;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
-import javax.imageio.ImageIO;
+import net.ohnobees.bimorphic.functors.BinarizationException;
+import net.ohnobees.bimorphic.functors.FalseBinarizationFunctor;
+import net.ohnobees.bimorphic.functors.MedianBinarizationFunctor;
+import net.ohnobees.bimorphic.utils.BinaryImageIO;
+import net.ohnobees.bimorphic.utils.TestUtils;
 
 import org.junit.Test;
 
 public class BinaryImageTest {
 
 	@Test
-	public void test() throws IOException {
+	public void testLoadImage() throws BinarizationException, IOException, URISyntaxException {
 		BufferedImage bi = new BufferedImage(4096, 4096, BufferedImage.TYPE_3BYTE_BGR);
 		int pixel = 0;
 		for (int r = 0; r < 256; r++)
@@ -24,7 +28,11 @@ public class BinaryImageTest {
 					bi.setRGB(pixel%4096, pixel/4096, rgb);
 					pixel++;
 				}
-		//fail("Not yet implemented");
+		BinaryImage bin = BinaryImage.loadImage(bi, new FalseBinarizationFunctor());
+		assertArrayEquals(new int[4096*4096], bin.getData());
+		bin = BinaryImage.loadImage(bi, new MedianBinarizationFunctor());
+		
+		BinaryImage bir = BinaryImageIO.readBinaryImage(TestUtils.fileFromResource("24bitMedianBinarized.png"));
+		assertEquals(bir,bin);
 	}
-
 }

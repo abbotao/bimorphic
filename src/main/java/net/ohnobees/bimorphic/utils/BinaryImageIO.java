@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 
 import net.ohnobees.bimorphic.functors.BinarizationException;
 import net.ohnobees.bimorphic.functors.BinarizationFunctor;
+import net.ohnobees.bimorphic.functors.BooleanBinaryFunctor;
 import net.ohnobees.bimorphic.image.BinaryImage;
 
 public class BinaryImageIO {
@@ -17,6 +18,14 @@ public class BinaryImageIO {
 	
 	public static BinaryImage read(File file) throws IOException, BinarizationException {
 		return read(file, null);
+	}
+	
+	public static BinaryImage readBinaryImage(String filePath) throws IOException, BinarizationException {
+		return read(new File(filePath));
+	}
+	
+	public static BinaryImage readBinaryImage(File file) throws IOException, BinarizationException {
+		return read(file, new BooleanBinaryFunctor());
 	}
 	
 	public static BinaryImage read(String filePath, BinarizationFunctor functor) throws IOException, BinarizationException {
@@ -38,7 +47,7 @@ public class BinaryImageIO {
 		
 		for (int y = 0; y < bi.getHeight(); y++)
 			for (int x = 0; x < bi.getWidth(); x++)
-				img.setRGB(x, y, (bi.getPixel(x,y)?0xFFFFFF:0x000000));
+				img.setRGB(x, y, (bi.getPixel(x,y)?0x000000:0xFFFFFF));
 		ImageIO.write(img, "png", file);
 	}
 }

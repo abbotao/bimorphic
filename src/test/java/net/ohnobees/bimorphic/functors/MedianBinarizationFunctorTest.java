@@ -66,14 +66,14 @@ public class MedianBinarizationFunctorTest {
 		int median = 4;
 		mbf.init(first);
 		for (int i = 0; i < 8; i++)
-			assertEquals("Failed on " + Integer.toString(i), i < median, mbf.binarize(i));
+			assertEquals("Failed on " + Integer.toString(i), i > median, mbf.binarize(i));
 		
 		mbf = new MedianBinarizationFunctor();
 		int[] second = {1, 2, 3, 4, 5, 6, 7};
 		median = 4;
 		mbf.init(second);
 		for (int i = 0; i < 9; i++)
-			assertEquals("Failed on " + Integer.toString(i), i < median, mbf.binarize(i));
+			assertEquals("Failed on " + Integer.toString(i), i > median, mbf.binarize(i));
 		
 	}
 

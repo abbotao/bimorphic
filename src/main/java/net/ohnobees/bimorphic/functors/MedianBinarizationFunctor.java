@@ -15,7 +15,7 @@ public class MedianBinarizationFunctor implements BinarizationFunctor {
 		if (!hasInit)
 			throw new BinarizationException("Functor not initialized.");
 		
-		return i < median;
+		return i > median;
 	}
 
 	public void init(int[] data) throws BinarizationException {
